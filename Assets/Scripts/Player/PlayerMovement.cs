@@ -7,11 +7,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 10f;
     
     private Rigidbody _rigidbody;
-    private Vector3 _inputMovement;
+    private Vector3 _direction;
+    private PlayerRotation _playerRotation;
     
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _playerRotation = GetComponent<PlayerRotation>();
     }
 
     private void Update()
@@ -29,11 +31,21 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         
-        _inputMovement = new Vector3(horizontal, 0f, vertical).normalized;
+        _direction = new Vector3(horizontal, 0f, vertical).normalized;
     }
 
     private void Movement()
     {
-        _rigidbody.velocity = new Vector3(_inputMovement.x, 0f, _inputMovement.z) * speed;
+        float vy = _rigidbody.velocity.y;
+        
+        Vector3 forward = Vector3.ProjectOnPlane(_playerRotation.GetTransform().forward, Vector3.up).normalized;
+        Vector3 right   = Vector3.ProjectOnPlane(_playerRotation.GetTransform().right,   Vector3.up).normalized;
+
+        Vector3 moveDir = forward * _direction.z + right * _direction.x;
+        moveDir.Normalize();
+
+        Vector3 horizontalVel = moveDir * speed;
+        _rigidbody.velocity   = new Vector3(horizontalVel.x, vy, horizontalVel.z);
+        
     }
 }

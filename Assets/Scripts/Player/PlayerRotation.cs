@@ -26,7 +26,7 @@ public class PlayerRotation : MonoBehaviour
 
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         CameraRotation();
     }

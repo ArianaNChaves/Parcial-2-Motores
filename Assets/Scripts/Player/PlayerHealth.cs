@@ -7,17 +7,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private HealthBarFill healthBarFill;
     [SerializeField] private float maxHealth = 100;
-
+    
     private float _health;
+    
+
     private void Start()
     {
         _health = maxHealth;
         healthBarFill.SetMaxHealth(maxHealth);
-    }
-
-    private void Update()
-    {
-
     }
 
     public void TakeDamage(float damage)

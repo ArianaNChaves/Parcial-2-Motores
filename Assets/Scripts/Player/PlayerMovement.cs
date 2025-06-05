@@ -19,13 +19,13 @@ public class PlayerMovement : MonoBehaviour
     private PlayerRotation _playerRotation;
     private bool _isGrounding = true;
     
-    private GrapplingSwingSystem _grapplingSystem;
+    private PlayerSwingSystem _grapplingSystem;
     
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _playerRotation = GetComponent<PlayerRotation>();
-        _grapplingSystem = GetComponent<GrapplingSwingSystem>();
+        _grapplingSystem = GetComponent<PlayerSwingSystem>();
     }
 
     private void Update()
